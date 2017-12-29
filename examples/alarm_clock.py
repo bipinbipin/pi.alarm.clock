@@ -5,7 +5,7 @@ import datetime
 import os
 import RPi.GPIO as GPIO
 
-from lib import SevenSegment
+from Adafruit_LED_Backpack import SevenSegment
 
 # ===========================================================================
 # Clock Example
