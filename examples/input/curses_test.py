@@ -37,7 +37,7 @@ def main(stdscr):
             stdscr.addstr("You pressed the 'Enter' key.")
         else:
             stdscr.addstr("This program doesn't know that key.....")
-            stdscr.addstr(c)
+            print(c)
 
 def isNumber(c):
     c.isdigit()
