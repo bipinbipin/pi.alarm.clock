@@ -68,7 +68,19 @@ def getTime(stdscr):
             # print(newAlarm)
         # elif key == 'ENTER':
         #     return newAlarm
-    return newAlarm
+    if(isValidTime(newAlarm)):
+        return newAlarm
+    else:
+        displayAlarm("0000")
+        getTime(stdscr)
+
+def isValidTime(input):
+    try:
+        time.strptime(input, '%H%M')
+        return True
+    except ValueError:
+        print("Not Valid Time")
+        return False
 
 
 def getKey(stdscr):
