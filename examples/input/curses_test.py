@@ -12,7 +12,7 @@ def main(stdscr):
         # print(c);
         # print(curses.keyname(c))
         # Clear the terminal
-        stdscr.clear()
+        # stdscr.clear()
         if c == ord('1'):
             stdscr.addstr("You pressed the '1' key.")
         elif c == ord('2'):
@@ -37,6 +37,7 @@ def main(stdscr):
             stdscr.addstr("You pressed the 'Enter' key.")
         else:
             stdscr.addstr("This program doesn't know that key.....")
+            stdscr.addstr(c)
 
 def isNumber(c):
     c.isdigit()
