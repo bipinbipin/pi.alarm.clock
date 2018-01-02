@@ -59,14 +59,16 @@ def displayCurrentTime():
 
 def getTime(stdscr):
     newAlarm = ""
-    for x in range(0, 4):
+    for x in range(0, 12):
         key = getKey(stdscr)
         # if len(newAlarm) >= 4:
         #     return newAlarm
         if(isinstance(key, int)):
-            newAlarm = newAlarm + key
+            newAlarm = newAlarm + str(key)
+            # print(newAlarm)
         # elif key == 'ENTER':
         #     return newAlarm
+    return newAlarm
 
 
 def getKey(stdscr):
@@ -97,7 +99,6 @@ def getKey(stdscr):
     elif c == curses.KEY_ENTER:
         return 'ENTER'
 
-
 def main(stdscr):
     # clear the screen.. needed?
     stdscr.clear()
@@ -123,7 +124,8 @@ def main(stdscr):
         # go into SETUP mode
         if (GPIO.input(4) == False):
             # take input and print to screen
-            print(getTime(stdscr))
+            alarm1 = getTime(stdscr)
+            print(alarm1)
             displayAlarm(alarm1)
         else:
             displayCurrentTime()
