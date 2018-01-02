@@ -93,8 +93,7 @@ def main(stdscr):
     # Continually update the time on a 4 char, 7-segment display
     while(True):
 
-        # take input and print to screen
-        print(getInput(stdscr))
+
         # if (GPIO.input(5) == False):
         #     os.system('echo "button 5"')
         #     GPIO.output(13, GPIO.HIGH)
@@ -111,6 +110,8 @@ def main(stdscr):
 
         # go into SETUP mode
         if (GPIO.input(4) == False):
+            # take input and print to screen
+            print(getInput(stdscr))
             displayAlarm(alarm1)
         else:
             displayCurrentTime()
