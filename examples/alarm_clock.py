@@ -84,4 +84,5 @@ while(True):
     # segment.write_display()
 
     # Wait a quarter second (less than 1 second to prevent colon blinking getting$
+    # Effectively the latency on the inputs
     time.sleep(0.1)
