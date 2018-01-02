@@ -12,7 +12,7 @@ def main(stdscr):
         # print(c);
         # print(curses.keyname(c))
         # Clear the terminal
-        # stdscr.clear()
+        stdscr.clear()
         if c == 113:
             stdscr.addstr("You pressed the '1' key.")
         elif c == 114:
@@ -41,8 +41,7 @@ def main(stdscr):
             # stdscr.addstr("This program doesn't know that key.....")
             # print(c)
 
-def isNumber(c):
-    c.isdigit()
+
 # wrapper is a function that does all of the setup and teardown, and makes sure
 # your program cleans up properly if it errors!
 wrapper(main)
