@@ -71,7 +71,7 @@ def getTime(stdscr):
     if(isValidTime(newAlarm)):
         return newAlarm
     else:
-        displayAlarm("0000")
+        displayAlarm("8888")
         getTime(stdscr)
 
 def isValidTime(input):
@@ -126,6 +126,8 @@ def main(stdscr):
             GPIO.output(13, GPIO.HIGH)
             alarm1 = getTime(stdscr)
             print(alarm1)
+            displayAlarm(alarm1)
+            time.sleep(1)
         else:
             GPIO.output(13, GPIO.LOW)
             displayCurrentTime()
