@@ -59,7 +59,7 @@ def displayCurrentTime():
 
 def getTime(stdscr):
     newAlarm = ""
-    for x in range(0, 12):
+    while(len(newAlarm) < 4):
         key = getKey(stdscr)
         # if len(newAlarm) >= 4:
         #     return newAlarm
