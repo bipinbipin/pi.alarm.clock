@@ -26,7 +26,7 @@ segment.begin()
 
 print("Press CTRL+Z to exit")
 
-alarm1 = "0745"
+
 
 def displayAlarm(time):
     segment.clear()
@@ -102,6 +102,7 @@ def getKey(stdscr):
 def main(stdscr):
     # clear the screen.. needed?
     stdscr.clear()
+    alarm1 = "0745"
 
     # Continually update the time on a 4 char, 7-segment display
     while(True):
