@@ -10,7 +10,7 @@ def main(stdscr):
         # Store the key value in the variable `c`
         c = stdscr.getch()
         print(c);
-        # print(c.isdigit())
+        print(curses.keyname(c))
         # Clear the terminal
         # stdscr.clear()
         # if c == ord('a'):
