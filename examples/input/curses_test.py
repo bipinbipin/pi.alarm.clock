@@ -19,25 +19,27 @@ def main(stdscr):
             stdscr.addstr("You pressed the '2' key.")
         elif c == 115:
             stdscr.addstr("You pressed the '3' key.")
-        elif c == ord('4'):
+        elif c == 116:
             stdscr.addstr("You pressed the '4' key.")
-        elif c == ord('5'):
+        elif c == 117:
             stdscr.addstr("You pressed the '5' key.")
-        elif c == ord('6'):
+        elif c == 118:
             stdscr.addstr("You pressed the '6' key.")
-        elif c == ord('7'):
+        elif c == 119:
             stdscr.addstr("You pressed the '7' key.")
-        elif c == ord('8'):
+        elif c == 120:
             stdscr.addstr("You pressed the '8' key.")
-        elif c == ord('9'):
+        elif c == 121:
             stdscr.addstr("You pressed the '9' key.")
-        # elif c == curses.KEY_0:
-        #     stdscr.addstr("You pressed the '0' key.")
+        elif c == 112:
+            stdscr.addstr("You pressed the '0' key.")
         elif c == curses.KEY_ENTER:
             stdscr.addstr("You pressed the 'Enter' key.")
-        else:
-            stdscr.addstr("This program doesn't know that key.....")
-            print(c)
+
+        # ignore unknown input
+        # else:
+            # stdscr.addstr("This program doesn't know that key.....")
+            # print(c)
 
 def isNumber(c):
     c.isdigit()
