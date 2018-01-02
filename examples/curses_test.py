@@ -10,6 +10,7 @@ def main(stdscr):
         # Store the key value in the variable `c`
         c = stdscr.getch()
         print(c);
+        print(c.isdigit())
         # Clear the terminal
         # stdscr.clear()
         if c == ord('a'):
@@ -19,7 +20,8 @@ def main(stdscr):
         else:
             stdscr.addstr("This program doesn't know that key.....")
 
-
+def isNumber(c):
+    c.isdigit()
 # wrapper is a function that does all of the setup and teardown, and makes sure
 # your program cleans up properly if it errors!
 wrapper(main)
