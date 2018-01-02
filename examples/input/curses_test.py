@@ -3,7 +3,7 @@ from curses import wrapper
 
 def getTime(stdscr):
     newAlarm = ""
-    for x in range(0, 4):
+    for x in range(0, 12):
         key = getKey(stdscr)
         # if len(newAlarm) >= 4:
         #     return newAlarm
