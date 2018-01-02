@@ -13,11 +13,11 @@ def main(stdscr):
         # print(curses.keyname(c))
         # Clear the terminal
         # stdscr.clear()
-        if c == ord('1'):
+        if c == 113:
             stdscr.addstr("You pressed the '1' key.")
-        elif c == ord('2'):
+        elif c == 114:
             stdscr.addstr("You pressed the '2' key.")
-        elif c == ord('3'):
+        elif c == 115:
             stdscr.addstr("You pressed the '3' key.")
         elif c == ord('4'):
             stdscr.addstr("You pressed the '4' key.")
