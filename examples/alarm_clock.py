@@ -107,12 +107,15 @@ def main(stdscr):
     while(True):
 
 
-        # if (GPIO.input(5) == False):
-        #     os.system('echo "button 5"')
-        #     GPIO.output(13, GPIO.HIGH)
-        # else:
-        #     GPIO.output(13, GPIO.LOW)
-        #
+        if (GPIO.input(5) == False):
+            # os.system('echo "button 5"')
+            GPIO.output(13, GPIO.HIGH)
+            alarm1 = getTime(stdscr)
+            print(alarm1)
+        else:
+            GPIO.output(13, GPIO.LOW)
+            displayCurrentTime()
+
         # if (GPIO.input(6) == False):
         #     os.system('echo "button 6"')
         #     setAlarm = input("Enter Alarm Time");
