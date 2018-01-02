@@ -33,6 +33,8 @@ def displayAlarm(time):
         segment.set_digit(d, int(i))
         d = d + 1
 
+    # Toggle colon
+    segment.set_colon(2)
     segment.write_display()
 
 def displayCurrentTime():
@@ -71,6 +73,7 @@ while(True):
     # else:
     #     displayCurrentTime()
 
+    # go into SETUP mode
     if (GPIO.input(4) == False):
         displayAlarm(setAlarm)
     else:
