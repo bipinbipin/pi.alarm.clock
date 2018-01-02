@@ -9,8 +9,9 @@ def main(stdscr):
     while True:
         # Store the key value in the variable `c`
         c = stdscr.getch()
+        print(c);
         # Clear the terminal
-        stdscr.clear()
+        # stdscr.clear()
         if c == ord('a'):
             stdscr.addstr("You pressed the 'a' key.")
         elif c == curses.KEY_UP:
