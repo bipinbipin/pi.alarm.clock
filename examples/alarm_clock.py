@@ -59,13 +59,14 @@ def displayCurrentTime():
 
 def getTime(stdscr):
     newAlarm = ""
-    key = getKey(stdscr)
-    if len(newAlarm) >= 4:
-        return newAlarm
-    elif(key.isdigit()):
-        newAlarm = newAlarm + key
-    elif key == 'ENTER':
-        return newAlarm
+    for x in range(0, 4):
+        key = getKey(stdscr)
+        # if len(newAlarm) >= 4:
+        #     return newAlarm
+        if(isinstance(key, int)):
+            newAlarm = newAlarm + key
+        # elif key == 'ENTER':
+        #     return newAlarm
 
 
 def getKey(stdscr):

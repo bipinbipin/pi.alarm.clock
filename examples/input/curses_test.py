@@ -3,14 +3,16 @@ from curses import wrapper
 
 def getTime(stdscr):
     newAlarm = ""
-    key = getKey(stdscr)
-    if len(newAlarm) >= 4:
-        return newAlarm
-    elif(isinstance(key, int)):
-        newAlarm = newAlarm + key
-    elif key == 'ENTER':
-        return newAlarm
-
+    for x in range(0, 4):
+        key = getKey(stdscr)
+        # if len(newAlarm) >= 4:
+        #     return newAlarm
+        if(isinstance(key, int)):
+            newAlarm = newAlarm + key
+            print(newAlarm)
+        # elif key == 'ENTER':
+        #     return newAlarm
+    return newAlarm
 
 def getKey(stdscr):
     # Store the key value in the variable `c`
