@@ -57,7 +57,18 @@ def displayCurrentTime():
 
     segment.write_display()
 
-def getInput(stdscr):
+def getTime(stdscr):
+    newAlarm = ""
+    key = getKey(stdscr)
+    if len(newAlarm) >= 4:
+        return newAlarm
+    elif(key.isdigit()):
+        newAlarm = newAlarm + key
+    elif key == 'ENTER':
+        return newAlarm
+
+
+def getKey(stdscr):
     # Store the key value in the variable `c`
     c = stdscr.getch()
     # Clear the terminal
@@ -111,7 +122,7 @@ def main(stdscr):
         # go into SETUP mode
         if (GPIO.input(4) == False):
             # take input and print to screen
-            print(getInput(stdscr))
+            print(getTime(stdscr))
             displayAlarm(alarm1)
         else:
             displayCurrentTime()
