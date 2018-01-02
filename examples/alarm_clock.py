@@ -123,6 +123,7 @@ def main(stdscr):
 
         # go into SETUP mode
         if (GPIO.input(4) == False):
+            displayAlarm(alarm1)
             # take input and print to screen
             alarm1 = getTime(stdscr)
             print(alarm1)
