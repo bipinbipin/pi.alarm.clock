@@ -9,7 +9,7 @@ def getTime(stdscr):
         #     return newAlarm
         if(isinstance(key, int)):
             newAlarm = newAlarm + str(key)
-            print(newAlarm)
+            # print(newAlarm)
         # elif key == 'ENTER':
         #     return newAlarm
     return newAlarm
