@@ -113,6 +113,7 @@ def main(stdscr):
             GPIO.output(13, GPIO.HIGH)
             alarm1 = getTime(stdscr)
             print(alarm1)
+            displayAlarm(alarm1)
         else:
             GPIO.output(13, GPIO.LOW)
             displayCurrentTime()
