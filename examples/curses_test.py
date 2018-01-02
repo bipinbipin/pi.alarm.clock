@@ -12,7 +12,7 @@ def main(stdscr):
         # print(c);
         # print(curses.keyname(c))
         # Clear the terminal
-        # stdscr.clear()
+        stdscr.clear()
         if c == ord('1'):
             stdscr.addstr("You pressed the '1' key.")
         elif c == ord('2'):
@@ -31,7 +31,7 @@ def main(stdscr):
             stdscr.addstr("You pressed the '8' key.")
         elif c == ord('9'):
             stdscr.addstr("You pressed the '9' key.")
-        elif c == ord('0'):
+        elif c == curses.KEY_0:
             stdscr.addstr("You pressed the '0' key.")
         elif c == curses.KEY_ENTER:
             stdscr.addstr("You pressed the 'Enter' key.")
