@@ -24,7 +24,7 @@ segment.begin()
 
 print("Press CTRL+Z to exit")
 
-setAlarm = "0745"
+alarm1 = "0745"
 
 def displayAlarm(time):
     segment.clear()
@@ -75,7 +75,7 @@ while(True):
 
     # go into SETUP mode
     if (GPIO.input(4) == False):
-        displayAlarm(setAlarm)
+        displayAlarm(alarm1)
     else:
         displayCurrentTime()
 
@@ -84,4 +84,4 @@ while(True):
     # segment.write_display()
 
     # Wait a quarter second (less than 1 second to prevent colon blinking getting$
-    time.sleep(0.25)
+    time.sleep(0.1)
