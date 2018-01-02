@@ -10,15 +10,15 @@ def main(stdscr):
         # Store the key value in the variable `c`
         c = stdscr.getch()
         print(c);
-        print(c.isdigit())
+        # print(c.isdigit())
         # Clear the terminal
         # stdscr.clear()
-        if c == ord('a'):
-            stdscr.addstr("You pressed the 'a' key.")
-        elif c == curses.KEY_UP:
-            stdscr.addstr("You pressed the up arrow.")
-        else:
-            stdscr.addstr("This program doesn't know that key.....")
+        # if c == ord('a'):
+        #     stdscr.addstr("You pressed the 'a' key.")
+        # elif c == curses.KEY_UP:
+        #     stdscr.addstr("You pressed the up arrow.")
+        # else:
+        #     stdscr.addstr("This program doesn't know that key.....")
 
 def isNumber(c):
     c.isdigit()
