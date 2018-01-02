@@ -6,7 +6,7 @@ def getTime(stdscr):
     key = getKey(stdscr)
     if len(newAlarm) >= 4:
         return newAlarm
-    elif(key.isdigit()):
+    elif(isinstance(key, int)):
         newAlarm = newAlarm + key
     elif key == 'ENTER':
         return newAlarm
