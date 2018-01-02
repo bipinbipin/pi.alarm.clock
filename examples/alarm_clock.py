@@ -110,10 +110,10 @@ def main(stdscr):
 
         if (GPIO.input(5) == False):
             # os.system('echo "button 5"')
+            displayAlarm(alarm1)
             GPIO.output(13, GPIO.HIGH)
             alarm1 = getTime(stdscr)
             print(alarm1)
-            displayAlarm(alarm1)
         else:
             GPIO.output(13, GPIO.LOW)
             displayCurrentTime()
