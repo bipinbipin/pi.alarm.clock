@@ -1,0 +1,4 @@
+sudo pkill python
+sudo pgrep python
+
+sudo python alarm_clock.py &
