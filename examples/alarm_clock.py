@@ -120,6 +120,7 @@ def getKey(stdscr):
 
 def main(stdscr):
     # clear the screen.. needed?
+    GPIO.output(13, GPIO.LOW)
     stdscr.clear()
     alarm1 = "1200"
 
