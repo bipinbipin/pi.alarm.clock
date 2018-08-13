@@ -122,7 +122,7 @@ def main(stdscr):
     # clear the screen.. needed?
     GPIO.output(13, GPIO.LOW)
     stdscr.clear()
-    alarm1 = "1200"
+    alarm1 = "1330"
 
     # Continually update the time on a 4 char, 7-segment display
     while(True):
