@@ -39,6 +39,7 @@ def displayAlarm(time):
     segment.set_colon(2)
     segment.write_display()
 
+
 def displayCurrentTime():
     now = datetime.datetime.now()
     hour = now.hour
@@ -119,8 +120,11 @@ def main(stdscr):
     # Continually update the time on a 4 char, 7-segment display
     while(True):
 
+        # check all buttons
+        if GPIO.input(4) == False:
+            displayAlarm(alarm1)
 
-        if (GPIO.input(5) == False):
+        elif GPIO.input(5) == False:
             # os.system('echo "button 5"')
             displayAlarm(alarm1)
             GPIO.output(13, GPIO.HIGH)
@@ -128,6 +132,10 @@ def main(stdscr):
             print(alarm1)
             displayAlarm(alarm1)
             time.sleep(1)
+
+        elif GPIO.input(6) == False:
+            GPIO.output(13, GPIO.HIGH)
+
         else:
             GPIO.output(13, GPIO.LOW)
             displayCurrentTime()
@@ -141,18 +149,12 @@ def main(stdscr):
         #     displayCurrentTime()
 
         # go into SETUP mode
-        if (GPIO.input(4) == False):
+
             # displayAlarm(alarm1)
             # # take input and print to screen
             # alarm1 = getTime(stdscr)
             # print(alarm1)
-            displayAlarm(alarm1)
-        else:
-            displayCurrentTime()
 
-        # Write the display buffer to the hardware.  This must be called to
-        # update the actual display LEDs.
-        # segment.write_display()
 
         # Wait a quarter second (less than 1 second to prevent colon blinking getting$
         # Effectively the latency on the inputs
