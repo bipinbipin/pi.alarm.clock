@@ -122,11 +122,11 @@ def main(stdscr):
 
         # check all buttons
         if GPIO.input(4) == False:
-            os.system('echo "button 4"')
+            os.system('echo "button 4\n"')
             displayAlarm(alarm1)
 
         elif GPIO.input(5) == False:
-            os.system('echo "button 5"')
+            os.system('echo "button 5\n"')
             GPIO.output(13, GPIO.HIGH)
             displayAlarm(alarm1)
             # alarm1 = getTime(stdscr)
@@ -135,11 +135,11 @@ def main(stdscr):
             # time.sleep(1)
 
         elif GPIO.input(6) == False:
-            os.system('echo "button 6"')
+            os.system('echo "button 6\n"')
             GPIO.output(13, GPIO.HIGH)
 
         else:
-            os.system('echo "no button pressed"')
+            os.system('echo "no button pressed\n"')
             GPIO.output(13, GPIO.LOW)
             displayCurrentTime()
 
