@@ -121,7 +121,7 @@ def getKey(stdscr):
 def main(stdscr):
     # clear the screen.. needed?
     stdscr.clear()
-    alarm1 = "0745"
+    alarm1 = "1130"
 
     # Continually update the time on a 4 char, 7-segment display
     while(True):
