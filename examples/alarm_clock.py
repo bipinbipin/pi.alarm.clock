@@ -62,7 +62,7 @@ def getCurrentTime():
     now = datetime.datetime.now()
     hour = now.hour
     minute = now.minute
-    return hour + minute
+    return str(hour) + str(minute)
 
 def getTime(stdscr):
     newAlarm = ""
