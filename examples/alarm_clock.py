@@ -121,16 +121,16 @@ def getKey(stdscr):
 def main(stdscr):
     # clear the screen.. needed?
     stdscr.clear()
-    alarm1 = "1130"
+    alarm1 = "1200"
 
     # Continually update the time on a 4 char, 7-segment display
     while(True):
 
-        print("alarm check", getCurrentTime())
+        # print("alarm check", getCurrentTime())
 
         # first check if its alarm time
         if getCurrentTime() == alarm1:
-            os.system('echo "ALARM 1')
+            os.system('echo "ALARM 1"')
             GPIO.output(13, GPIO.HIGH)
 
         # check all buttons
