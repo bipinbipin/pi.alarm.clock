@@ -58,6 +58,12 @@ def displayCurrentTime():
 
     segment.write_display()
 
+def getCurrentTime():
+    now = datetime.datetime.now()
+    hour = now.hour
+    minute = now.minute
+    return hour + minute
+
 def getTime(stdscr):
     newAlarm = ""
     while(len(newAlarm) < 4):
@@ -120,6 +126,13 @@ def main(stdscr):
     # Continually update the time on a 4 char, 7-segment display
     while(True):
 
+        print("alarm check", getCurrentTime())
+
+        # first check if its alarm time
+        if getCurrentTime() == alarm1:
+            os.system('echo "ALARM 1')
+            GPIO.output(13, GPIO.HIGH)
+
         # check all buttons
         if GPIO.input(4) == False:
             os.system('echo "button 4\n"')
@@ -127,7 +140,7 @@ def main(stdscr):
 
         elif GPIO.input(5) == False:
             os.system('echo "button 5\n"')
-            GPIO.output(13, GPIO.HIGH)
+            # GPIO.output(13, GPIO.HIGH)
             displayAlarm(alarm1)
             # alarm1 = getTime(stdscr)
             # print(alarm1)
@@ -136,11 +149,11 @@ def main(stdscr):
 
         elif GPIO.input(6) == False:
             os.system('echo "button 6\n"')
-            GPIO.output(13, GPIO.HIGH)
+            # GPIO.output(13, GPIO.HIGH)
 
         else:
-            os.system('echo "no button pressed\n"')
-            GPIO.output(13, GPIO.LOW)
+            # os.system('echo "no button pressed\n"')
+            # GPIO.output(13, GPIO.LOW)
             displayCurrentTime()
 
         # if (GPIO.input(6) == False):
