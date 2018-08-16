@@ -149,10 +149,6 @@ def main(stdscr):
     # Continually update the time on a 4 char, 7-segment display
     while(True):
 
-        delta = encoder.get_cycles()
-        if delta!=0:
-            print("rotate %d" % delta)
-
         # print("alarm check", getCurrentTime())
 
         # first check if its alarm time needs to be a isolated loop
