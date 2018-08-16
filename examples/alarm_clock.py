@@ -132,8 +132,9 @@ def getKey(stdscr):
 
 def on_turn(delta):
     print("encoder turned")
-    if delta == -1
     print(delta)
+
+
 
 
 def main(stdscr):
