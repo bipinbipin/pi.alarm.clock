@@ -146,8 +146,8 @@ def main(stdscr):
     while(True):
 
         delta = encoder.get_cycles()
-        if delta!=0:
-            print("rotate %d" % delta)
+        # if delta!=0:
+        print("rotate %d" % delta)
 
         # print("alarm check", getCurrentTime())
 
