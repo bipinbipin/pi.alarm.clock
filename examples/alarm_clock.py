@@ -134,10 +134,10 @@ def on_turn(delta):
     print("encoder turned")
     print(delta)
     if delta == 1:
-        ALARM_1 = "0001"
+        displayAlarm("0001")
 
     elif delta == -1:
-        ALARM_1 = "1000"
+       displayAlarm("1000")
 
 
 
@@ -183,7 +183,7 @@ def main(stdscr):
         else:
             # os.system('echo "no button pressed\n"')
             GPIO.output(13, GPIO.LOW)
-            displayAlarm(ALARM_1)
+            # displayAlarm(ALARM_1)
             # displayCurrentTime()
 
         # if (GPIO.input(6) == False):
