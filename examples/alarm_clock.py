@@ -5,10 +5,10 @@ import datetime
 import os
 import RPi.GPIO as GPIO
 import curses
-import lib.rotary_encoder
 
 from curses import wrapper
 from Adafruit_LED_Backpack import SevenSegment
+from lib import rotary_encoder
 
 # Encoder PINS
 ENCODER_A = 17
@@ -31,7 +31,7 @@ GPIO.setup(6, GPIO.IN)
 GPIO.setup(13, GPIO.OUT)
 
 # Encoder Setup
-encoder = lib.rotary_encoder.RotaryEncoder(ENCODER_A, ENCODER_B)
+encoder = rotary_encoder.RotaryEncoder(ENCODER_A, ENCODER_B)
 
 # GPIO.setup(ENCODER_A, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 # GPIO.setup(ENCODER_B, GPIO.IN, pull_up_down=GPIO.PUD_UP)
