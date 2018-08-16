@@ -129,10 +129,12 @@ def main(stdscr):
 
         # print("alarm check", getCurrentTime())
 
-        # first check if its alarm time
+        # first check if its alarm time needs to be a isolated loop
         if getCurrentTime() == alarm1:
             print("Alarm 1 Triggered.")
             GPIO.output(13, GPIO.HIGH)
+
+
 
         # check all buttons
         if GPIO.input(4) == False:
@@ -140,8 +142,8 @@ def main(stdscr):
             displayAlarm(alarm1)
 
         elif GPIO.input(5) == False:
-            print("Button 5 Pressed.")
-            # GPIO.output(13, GPIO.HIGH)
+            print("Encoder 1 Pressed.")
+            GPIO.output(13, GPIO.HIGH)
             displayAlarm(alarm1)
             # alarm1 = getTime(stdscr)
             # print(alarm1)
@@ -154,7 +156,7 @@ def main(stdscr):
 
         else:
             # os.system('echo "no button pressed\n"')
-            # GPIO.output(13, GPIO.LOW)
+            GPIO.output(13, GPIO.LOW)
             displayCurrentTime()
 
         # if (GPIO.input(6) == False):
