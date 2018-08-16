@@ -4,9 +4,7 @@ import time
 import datetime
 import RPi.GPIO as GPIO
 import curses
-import gaugette.gpio
-import gaugette.rotary_encoder
-# import gaugette.switch
+
 
 from curses import wrapper
 from Adafruit_LED_Backpack import SevenSegment
@@ -33,9 +31,7 @@ GPIO.setup(6, GPIO.IN)
 GPIO.setup(13, GPIO.OUT)
 
 # Encoder Setup
-gpio = gaugette.gpio.GPIO()
-encoder = gaugette.rotary_encoder.RotaryEncoder(gpio, ENCODER_A, ENCODER_B)
-encoder.start()
+
 
 # GPIO.setup(ENCODER_A, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 # GPIO.setup(ENCODER_B, GPIO.IN, pull_up_down=GPIO.PUD_UP)
@@ -137,11 +133,18 @@ def getKey(stdscr):
     elif c == curses.KEY_ENTER:
         return 'ENTER'
 
+def on_turn(delta):
+    print("encoder turned")
+    print(delta)
+
+
 def main(stdscr):
     # clear the screen.. needed?
     GPIO.output(13, GPIO.LOW)
     stdscr.clear()
     alarm1 = "1330"
+
+    encoder = RotaryEncoder(ENCODER_A, ENCODER_B, callback=on_turn)
 
     # Continually update the time on a 4 char, 7-segment display
     while(True):
@@ -201,6 +204,78 @@ def main(stdscr):
         # Wait a quarter second (less than 1 second to prevent colon blinking getting$
         # Effectively the latency on the inputs
         time.sleep(0.1)
+
+
+class RotaryEncoder:
+    """
+    A class to decode mechanical rotary encoder pulses.
+    Ported to RPi.GPIO from the pigpio sample here:
+    http://abyz.co.uk/rpi/pigpio/examples.html
+    """
+
+    def __init__(self, gpioA, gpioB, callback=None, buttonPin=None, buttonCallback=None):
+        """
+        Instantiate the class. Takes three arguments: the two pin numbers to
+        which the rotary encoder is connected, plus a callback to run when the
+        switch is turned.
+
+        The callback receives one argument: a `delta` that will be either 1 or -1.
+        One of them means that the dial is being turned to the right; the other
+        means that the dial is being turned to the left. I'll be damned if I know
+        yet which one is which.
+        """
+
+        self.lastGpio = None
+        self.gpioA = gpioA
+        self.gpioB = gpioB
+        self.callback = callback
+
+        self.gpioButton = buttonPin
+        self.buttonCallback = buttonCallback
+
+        self.levA = 0
+        self.levB = 0
+
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(self.gpioA, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        GPIO.setup(self.gpioB, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+
+        GPIO.add_event_detect(self.gpioA, GPIO.BOTH, self._callback)
+        GPIO.add_event_detect(self.gpioB, GPIO.BOTH, self._callback)
+
+        if self.gpioButton:
+            GPIO.setup(self.gpioButton, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+            GPIO.add_event_detect(self.gpioButton, GPIO.FALLING, self._buttonCallback, bouncetime=500)
+
+    def destroy(self):
+        GPIO.remove_event_detect(self.gpioA)
+        GPIO.remove_event_detect(self.gpioB)
+        GPIO.cleanup()
+
+    def _buttonCallback(self, channel):
+        self.buttonCallback(GPIO.input(channel))
+
+    def _callback(self, channel):
+        level = GPIO.input(channel)
+        if channel == self.gpioA:
+            self.levA = level
+        else:
+            self.levB = level
+
+        # Debounce.
+        if channel == self.lastGpio:
+            return
+
+        # When both inputs are at 1, we'll fire a callback. If A was the most
+        # recent pin set high, it'll be forward, and if B was the most recent pin
+        # set high, it'll be reverse.
+        self.lastGpio = channel
+        if channel == self.gpioA and level == 1:
+            if self.levB == 1:
+                self.callback(1)
+        elif channel == self.gpioB and level == 1:
+            if self.levA == 1:
+                self.callback(-1)
 
 # wrapper is a function that does all of the setup and teardown, and makes sure
 # your program cleans up properly if it errors!
