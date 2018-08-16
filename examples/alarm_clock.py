@@ -5,21 +5,36 @@ import datetime
 import os
 import RPi.GPIO as GPIO
 import curses
+import lib.rotary_encoder
 
 from curses import wrapper
 from Adafruit_LED_Backpack import SevenSegment
 
-# ===========================================================================
-# Clock Example
-# ===========================================================================
+# Encoder PINS
+ENCODER_A = 17
+ENCODER_B = 22
+
+# Minute Buffer
+MINUTE_MIN = 00
+MINUTE_MAX = 59
+
+# 7 Segment I2C Address
 segment = SevenSegment.SevenSegment(address=0x70)
 
+
+# GPIO Setup
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(4, GPIO.IN)
 GPIO.setup(5, GPIO.IN)
 GPIO.setup(6, GPIO.IN)
 GPIO.setup(13, GPIO.OUT)
+
+# Encoder Setup
+encoder = lib.rotary_encoder.RotaryEncoder(ENCODER_A, ENCODER_B)
+
+# GPIO.setup(ENCODER_A, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+# GPIO.setup(ENCODER_B, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 # Initialize the display. Must be called once before using the display.
 segment.begin()
@@ -126,6 +141,10 @@ def main(stdscr):
 
     # Continually update the time on a 4 char, 7-segment display
     while(True):
+
+        delta = encoder.get_cycles()
+        if delta!=0:
+            print("rotate %d" % delta)
 
         # print("alarm check", getCurrentTime())
 
