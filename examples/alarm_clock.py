@@ -133,6 +133,11 @@ def getKey(stdscr):
 def on_turn(delta):
     print("encoder turned")
     print(delta)
+    if delta == 1:
+        ALARM_1 = "0001"
+
+    elif delta == -1:
+        ALARM_1 = "1000"
 
 
 
