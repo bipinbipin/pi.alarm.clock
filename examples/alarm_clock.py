@@ -6,7 +6,7 @@ import RPi.GPIO as GPIO
 import curses
 import gaugette.gpio
 import gaugette.rotary_encoder
-import gaugette.switch
+# import gaugette.switch
 
 from curses import wrapper
 from Adafruit_LED_Backpack import SevenSegment
@@ -28,7 +28,7 @@ segment = SevenSegment.SevenSegment(address=0x70)
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(4, GPIO.IN)
-# GPIO.setup(5, GPIO.IN)
+GPIO.setup(5, GPIO.IN)
 GPIO.setup(6, GPIO.IN)
 GPIO.setup(13, GPIO.OUT)
 
