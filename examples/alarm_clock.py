@@ -8,7 +8,7 @@ import rotary_encoder
 
 from curses import wrapper
 from Adafruit_LED_Backpack import SevenSegment
-
+from .rotary_encoder import RotaryEncoder
 
 # Encoder PINS
 ENCODER_A = 17
