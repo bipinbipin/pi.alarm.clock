@@ -30,11 +30,8 @@ GPIO.setup(5, GPIO.IN)
 GPIO.setup(6, GPIO.IN)
 GPIO.setup(13, GPIO.OUT)
 
-# Encoder Setup
-
-
-# GPIO.setup(ENCODER_A, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-# GPIO.setup(ENCODER_B, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+# Alarm
+ALARM_1 = "0000"
 
 # Initialize the display. Must be called once before using the display.
 segment.begin()
@@ -135,6 +132,7 @@ def getKey(stdscr):
 
 def on_turn(delta):
     print("encoder turned")
+    if delta == -1
     print(delta)
 
 
@@ -142,7 +140,7 @@ def main(stdscr):
     # clear the screen.. needed?
     GPIO.output(13, GPIO.LOW)
     stdscr.clear()
-    alarm1 = "1330"
+
 
     encoder = RotaryEncoder(ENCODER_A, ENCODER_B, callback=on_turn)
 
@@ -152,7 +150,7 @@ def main(stdscr):
         # print("alarm check", getCurrentTime())
 
         # first check if its alarm time needs to be a isolated loop
-        if getCurrentTime() == alarm1:
+        if getCurrentTime() == ALARM_1:
             print("Alarm 1 Triggered.")
             GPIO.output(13, GPIO.HIGH)
 
@@ -161,12 +159,12 @@ def main(stdscr):
         # check all buttons
         if GPIO.input(4) == False:
             print("Button 4 Pressed.")
-            displayAlarm(alarm1)
+            displayAlarm(ALARM_1)
 
         elif GPIO.input(5) == False:
             print("Encoder 1 Pressed.")
             GPIO.output(13, GPIO.HIGH)
-            displayAlarm(alarm1)
+            displayAlarm(ALARM_1)
             # alarm1 = getTime(stdscr)
             # print(alarm1)
             # displayAlarm(alarm1)
@@ -179,7 +177,8 @@ def main(stdscr):
         else:
             # os.system('echo "no button pressed\n"')
             GPIO.output(13, GPIO.LOW)
-            displayCurrentTime()
+            displayAlarm(ALARM_1)
+            # displayCurrentTime()
 
         # if (GPIO.input(6) == False):
         #     os.system('echo "button 6"')
