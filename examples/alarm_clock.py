@@ -4,11 +4,12 @@ import time
 import datetime
 import RPi.GPIO as GPIO
 import curses
-# import rotary_encoder
+import gaugette.gpio
+import gaugette.rotary_encoder
 
 from curses import wrapper
 from Adafruit_LED_Backpack import SevenSegment
-from .rotary_encoder import RotaryEncoder
+
 
 # Encoder PINS
 ENCODER_A = 17
@@ -31,7 +32,9 @@ GPIO.setup(6, GPIO.IN)
 GPIO.setup(13, GPIO.OUT)
 
 # Encoder Setup
-encoder = RotaryEncoder(ENCODER_A, ENCODER_B)
+gpio = gaugette.gpio.GPIO()
+encoder = gaugette.rotary_encoder.RotaryEncoder(gpio, ENCODER_A, ENCODER_B)
+encoder.start()
 
 # GPIO.setup(ENCODER_A, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 # GPIO.setup(ENCODER_B, GPIO.IN, pull_up_down=GPIO.PUD_UP)
