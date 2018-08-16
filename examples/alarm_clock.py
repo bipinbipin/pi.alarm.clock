@@ -2,13 +2,13 @@
 
 import time
 import datetime
-import os
 import RPi.GPIO as GPIO
 import curses
+import rotary_encoder
 
 from curses import wrapper
 from Adafruit_LED_Backpack import SevenSegment
-from lib import rotary_encoder
+
 
 # Encoder PINS
 ENCODER_A = 17
