@@ -139,10 +139,10 @@ def on_turn(delta):
 
 
 
-def main(stdscr):
+# def main(stdscr):
     # clear the screen.. needed?
     GPIO.output(13, GPIO.LOW)
-    stdscr.clear()
+    # stdscr.clear()
 
 
     encoder = RotaryEncoder(ENCODER_A, ENCODER_B, callback=on_turn)
