@@ -3,10 +3,7 @@
 import time
 import datetime
 import RPi.GPIO as GPIO
-import curses
 
-
-from curses import wrapper
 from Adafruit_LED_Backpack import SevenSegment
 
 
@@ -102,33 +99,33 @@ def isValidTime(input):
         return False
 
 
-def getKey(stdscr):
-    # Store the key value in the variable `c`
-    c = stdscr.getch()
-    # Clear the terminal
-    # stdscr.clear()
-    if c == 113:
-        return 1
-    elif c == 114:
-        return 2
-    elif c == 115:
-        return 3
-    elif c == 116:
-        return 4
-    elif c == 117:
-        return 5
-    elif c == 118:
-        return 6
-    elif c == 119:
-        return 7
-    elif c == 120:
-        return 8
-    elif c == 121:
-        return 9
-    elif c == 112:
-        return 0
-    elif c == curses.KEY_ENTER:
-        return 'ENTER'
+# def getKey(stdscr):
+#     # Store the key value in the variable `c`
+#     c = stdscr.getch()
+#     # Clear the terminal
+#     # stdscr.clear()
+#     if c == 113:
+#         return 1
+#     elif c == 114:
+#         return 2
+#     elif c == 115:
+#         return 3
+#     elif c == 116:
+#         return 4
+#     elif c == 117:
+#         return 5
+#     elif c == 118:
+#         return 6
+#     elif c == 119:
+#         return 7
+#     elif c == 120:
+#         return 8
+#     elif c == 121:
+#         return 9
+#     elif c == 112:
+#         return 0
+#     elif c == curses.KEY_ENTER:
+#         return 'ENTER'
 
 def on_turn(delta):
     print("encoder turned")
@@ -137,7 +134,7 @@ def on_turn(delta):
         displayAlarm("0001")
 
     elif delta == -1:
-       displayAlarm("1000")
+        displayAlarm("1000")
 
 
 
@@ -278,6 +275,6 @@ class RotaryEncoder:
             if self.levA == 1:
                 self.callback(-1)
 
-# wrapper is a function that does all of the setup and teardown, and makes sure
-# your program cleans up properly if it errors!
-wrapper(main)
+# # wrapper is a function that does all of the setup and teardown, and makes sure
+# # your program cleans up properly if it errors!
+# wrapper(main)
