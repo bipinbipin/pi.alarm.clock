@@ -10,6 +10,38 @@ class AlarmClock:
 
     def __init__(self):
         encoder = RotaryEncoder(self.ENCODER_A, self.ENCODER_B, callback=self.on_turn)
+        self.mainloop()
+
+    # Encoder PINS
+    ENCODER_A = 17
+    ENCODER_B = 22
+
+    # Minute Buffer
+    MINUTE_MIN = 00
+    MINUTE_MAX = 59
+
+    # 7 Segment I2C Address
+    segment = SevenSegment.SevenSegment(address=0x70)
+
+
+    # GPIO Setup
+    GPIO.setwarnings(False)
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(4, GPIO.IN)
+    GPIO.setup(5, GPIO.IN)
+    GPIO.setup(6, GPIO.IN)
+    GPIO.setup(13, GPIO.OUT)
+
+    # Alarm
+    ALARM_1 = "0000"
+    ALARM_2 = 0
+
+    # Initialize the display. Must be called once before using the display.
+    segment.begin()
+
+    print("Press CTRL+Z to exit")
+
+    def mainloop(self):
         # Continually update the time on a 4 char, 7-segment display
         while (True):
 
@@ -62,35 +94,6 @@ class AlarmClock:
             # Wait a quarter second (less than 1 second to prevent colon blinking getting$
             # Effectively the latency on the inputs
             time.sleep(0.1)
-
-    # Encoder PINS
-    ENCODER_A = 17
-    ENCODER_B = 22
-
-    # Minute Buffer
-    MINUTE_MIN = 00
-    MINUTE_MAX = 59
-
-    # 7 Segment I2C Address
-    segment = SevenSegment.SevenSegment(address=0x70)
-
-
-    # GPIO Setup
-    GPIO.setwarnings(False)
-    GPIO.setmode(GPIO.BCM)
-    GPIO.setup(4, GPIO.IN)
-    GPIO.setup(5, GPIO.IN)
-    GPIO.setup(6, GPIO.IN)
-    GPIO.setup(13, GPIO.OUT)
-
-    # Alarm
-    ALARM_1 = "0000"
-    ALARM_2 = 0
-
-    # Initialize the display. Must be called once before using the display.
-    segment.begin()
-
-    print("Press CTRL+Z to exit")
 
     def getNextSeqNum(number):
         number += 1
