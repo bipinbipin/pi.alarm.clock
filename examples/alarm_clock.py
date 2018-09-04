@@ -9,7 +9,18 @@ from Adafruit_LED_Backpack import SevenSegment
 class AlarmClock:
 
     def __init__(self):
+        print("Press CTRL+Z to exit")
         encoder = RotaryEncoder(self.ENCODER_A, self.ENCODER_B, callback=self.on_turn)
+
+        # 7 Segment I2C Address
+        self.segment = SevenSegment.SevenSegment(address=0x70)
+
+        # Initialize the display. Must be called once before using the display.
+        self.segment.begin()
+        print("Segment Initialized")
+
+        GPIO.output(13, GPIO.LOW)
+
         self.mainloop()
 
     # Encoder PINS
@@ -20,8 +31,6 @@ class AlarmClock:
     MINUTE_MIN = 00
     MINUTE_MAX = 59
 
-    # 7 Segment I2C Address
-    segment = SevenSegment.SevenSegment(address=0x70)
 
 
     # GPIO Setup
@@ -36,12 +45,8 @@ class AlarmClock:
     ALARM_1 = "0000"
     ALARM_2 = 0
 
-    # Initialize the display. Must be called once before using the display.
-    segment.begin()
-
-    print("Press CTRL+Z to exit")
-
     def mainloop(self):
+        print("Main Loop Executing")
         # Continually update the time on a 4 char, 7-segment display
         while (True):
 
@@ -206,7 +211,7 @@ class AlarmClock:
 
     # def main(stdscr):
         # clear the screen.. needed?
-    GPIO.output(13, GPIO.LOW)
+
     # stdscr.clear()
 
 
