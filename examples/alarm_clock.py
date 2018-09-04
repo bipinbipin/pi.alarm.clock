@@ -8,8 +8,8 @@ from Adafruit_LED_Backpack import SevenSegment
 
 class AlarmClock:
 
-    # def __init__(self):
-
+    def __init__(self):
+        encoder = RotaryEncoder(self.ENCODER_A, self.ENCODER_B, callback=self.on_turn)
 
     # Encoder PINS
     ENCODER_A = 17
@@ -154,7 +154,7 @@ class AlarmClock:
     GPIO.output(13, GPIO.LOW)
     # stdscr.clear()
 
-    encoder = RotaryEncoder(ENCODER_A, ENCODER_B, callback=on_turn)
+
 
     # Continually update the time on a 4 char, 7-segment display
     while(True):
