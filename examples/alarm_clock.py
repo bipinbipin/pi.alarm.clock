@@ -10,6 +10,58 @@ class AlarmClock:
 
     def __init__(self):
         encoder = RotaryEncoder(self.ENCODER_A, self.ENCODER_B, callback=self.on_turn)
+        # Continually update the time on a 4 char, 7-segment display
+        while (True):
+
+            # print("alarm check", getCurrentTime())
+
+            # first check if its alarm time needs to be a isolated loop
+            if self.getCurrentTime() == self.ALARM_1:
+                print("Alarm 1 Triggered.")
+                GPIO.output(13, GPIO.HIGH)
+
+            # check all buttons
+            if GPIO.input(4) == False:
+                print("Button 4 Pressed.")
+                self.displayAlarm(self.ALARM_1)
+
+            elif GPIO.input(5) == False:
+                print("Encoder 1 Pressed.")
+                GPIO.output(13, GPIO.HIGH)
+                self.displayAlarm(self.ALARM_1)
+                # alarm1 = getTime(stdscr)
+                # print(alarm1)
+                # displayAlarm(alarm1)
+                # time.sleep(1)
+
+            elif GPIO.input(6) == False:
+                print("Button 6 Pressed.")
+                # GPIO.output(13, GPIO.HIGH)
+
+            else:
+                # os.system('echo "no button pressed\n"')
+                GPIO.output(13, GPIO.LOW)
+                # displayAlarm(ALARM_1)
+                # displayCurrentTime()
+
+            # if (GPIO.input(6) == False):
+            #     os.system('echo "button 6"')
+            #     setAlarm = input("Enter Alarm Time");
+            #     # print "Alarm time is now" + str(setAlarm);
+            #     displayAlarm(setAlarm)
+            # else:
+            #     displayCurrentTime()
+
+            # go into SETUP mode
+
+            # displayAlarm(alarm1)
+            # # take input and print to screen
+            # alarm1 = getTime(stdscr)
+            # print(alarm1)
+
+            # Wait a quarter second (less than 1 second to prevent colon blinking getting$
+            # Effectively the latency on the inputs
+            time.sleep(0.1)
 
     # Encoder PINS
     ENCODER_A = 17
@@ -156,58 +208,7 @@ class AlarmClock:
 
 
 
-    # Continually update the time on a 4 char, 7-segment display
-    while(True):
 
-        # print("alarm check", getCurrentTime())
-
-        # first check if its alarm time needs to be a isolated loop
-        if getCurrentTime() == ALARM_1:
-            print("Alarm 1 Triggered.")
-            GPIO.output(13, GPIO.HIGH)
-
-        # check all buttons
-        if GPIO.input(4) == False:
-            print("Button 4 Pressed.")
-            displayAlarm(ALARM_1)
-
-        elif GPIO.input(5) == False:
-            print("Encoder 1 Pressed.")
-            GPIO.output(13, GPIO.HIGH)
-            displayAlarm(ALARM_1)
-            # alarm1 = getTime(stdscr)
-            # print(alarm1)
-            # displayAlarm(alarm1)
-            # time.sleep(1)
-
-        elif GPIO.input(6) == False:
-            print("Button 6 Pressed.")
-            # GPIO.output(13, GPIO.HIGH)
-
-        else:
-            # os.system('echo "no button pressed\n"')
-            GPIO.output(13, GPIO.LOW)
-            # displayAlarm(ALARM_1)
-            # displayCurrentTime()
-
-        # if (GPIO.input(6) == False):
-        #     os.system('echo "button 6"')
-        #     setAlarm = input("Enter Alarm Time");
-        #     # print "Alarm time is now" + str(setAlarm);
-        #     displayAlarm(setAlarm)
-        # else:
-        #     displayCurrentTime()
-
-        # go into SETUP mode
-
-            # displayAlarm(alarm1)
-            # # take input and print to screen
-            # alarm1 = getTime(stdscr)
-            # print(alarm1)
-
-        # Wait a quarter second (less than 1 second to prevent colon blinking getting$
-        # Effectively the latency on the inputs
-        time.sleep(0.1)
 
     # # wrapper is a function that does all of the setup and teardown, and makes sure
     # # your program cleans up properly if it errors!
