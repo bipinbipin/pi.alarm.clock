@@ -293,3 +293,6 @@ class RotaryEncoder:
         elif channel == self.gpioB and level == 1:
             if self.levA == 1:
                 self.callback(-1)
+
+
+AlarmClock()
