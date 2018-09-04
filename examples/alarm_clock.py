@@ -6,153 +6,212 @@ import RPi.GPIO as GPIO
 
 from Adafruit_LED_Backpack import SevenSegment
 
+class AlarmClock:
 
-# Encoder PINS
-ENCODER_A = 17
-ENCODER_B = 22
-
-# Minute Buffer
-MINUTE_MIN = 00
-MINUTE_MAX = 59
-
-# 7 Segment I2C Address
-segment = SevenSegment.SevenSegment(address=0x70)
+    # def __init__(self):
 
 
-# GPIO Setup
-GPIO.setwarnings(False)
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(4, GPIO.IN)
-GPIO.setup(5, GPIO.IN)
-GPIO.setup(6, GPIO.IN)
-GPIO.setup(13, GPIO.OUT)
+    # Encoder PINS
+    ENCODER_A = 17
+    ENCODER_B = 22
 
-# Alarm
-ALARM_1 = "0000"
-ALARM_2 = 0
+    # Minute Buffer
+    MINUTE_MIN = 00
+    MINUTE_MAX = 59
 
-# Initialize the display. Must be called once before using the display.
-segment.begin()
-
-print("Press CTRL+Z to exit")
-
-def getNextSeqNum(number):
-    number += 1
-    return format(number, '04d')
+    # 7 Segment I2C Address
+    segment = SevenSegment.SevenSegment(address=0x70)
 
 
-def on_turn(delta):
-    print("encoder turned")
-    print(delta)
-    if delta == 1:
-        displayAlarm(getNextSeqNum(ALARM_2))
+    # GPIO Setup
+    GPIO.setwarnings(False)
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(4, GPIO.IN)
+    GPIO.setup(5, GPIO.IN)
+    GPIO.setup(6, GPIO.IN)
+    GPIO.setup(13, GPIO.OUT)
 
-    elif delta == -1:
-        displayAlarm(getNextSeqNum(ALARM_2))
+    # Alarm
+    ALARM_1 = "0000"
+    ALARM_2 = 0
 
+    # Initialize the display. Must be called once before using the display.
+    segment.begin()
 
+    print("Press CTRL+Z to exit")
 
-
-
-def displayAlarm(time):
-    segment.clear()
-    d = 0
-    for i in str(time):
-        segment.set_digit(d, int(i))
-        d = d + 1
-
-    # Toggle colon
-    segment.set_colon(2)
-    segment.write_display()
+    def getNextSeqNum(number):
+        number += 1
+        return format(number, '04d')
 
 
-def displayCurrentTime():
-    now = datetime.datetime.now()
-    hour = now.hour
-    minute = now.minute
-    second = now.second
+    def on_turn(self, delta):
+        print("encoder turned")
+        print(delta)
+        if delta == 1:
+            self.displayAlarm(self.getNextSeqNum(self.ALARM_2))
 
-    segment.clear()
-    # Set hours
-    segment.set_digit(0, int(hour / 10))
-    segment.set_digit(1, hour % 10)
-    # Set minutes
-    segment.set_digit(2, int(minute / 10))
-    segment.set_digit(3, minute % 10)
-    # Toggle colon
-    segment.set_colon(second % 2)
-
-    segment.write_display()
-
-def getCurrentTime():
-    now = datetime.datetime.now()
-    hour = now.hour
-    minute = now.minute
-    return str(hour) + str(minute)
-
-def getTime(stdscr):
-    newAlarm = ""
-    while(len(newAlarm) < 4):
-        # key = getKey(stdscr)
-        key = ""
-        # if len(newAlarm) >= 4:
-        #     return newAlarm
-        if(isinstance(key, int)):
-            newAlarm = newAlarm + str(key)
-            # print(newAlarm)
-        # elif key == 'ENTER':
-        #     return newAlarm
-    if(isValidTime(newAlarm)):
-        return newAlarm
-    else:
-        displayAlarm("8888")
-        getTime(stdscr)
-
-def isValidTime(input):
-    try:
-        time.strptime(input, '%H%M')
-        return True
-    except ValueError:
-        print("Not Valid Time")
-        return False
+        elif delta == -1:
+            self.displayAlarm(self.getNextSeqNum(self.ALARM_2))
 
 
-# def getKey(stdscr):
-#     # Store the key value in the variable `c`
-#     c = stdscr.getch()
-#     # Clear the terminal
-#     # stdscr.clear()
-#     if c == 113:
-#         return 1
-#     elif c == 114:
-#         return 2
-#     elif c == 115:
-#         return 3
-#     elif c == 116:
-#         return 4
-#     elif c == 117:
-#         return 5
-#     elif c == 118:
-#         return 6
-#     elif c == 119:
-#         return 7
-#     elif c == 120:
-#         return 8
-#     elif c == 121:
-#         return 9
-#     elif c == 112:
-#         return 0
-#     elif c == curses.KEY_ENTER:
-#         return 'ENTER'
 
 
-# def main(stdscr):
-    # clear the screen.. needed?
-GPIO.output(13, GPIO.LOW)
+
+    def displayAlarm(self, time):
+        self.segment.clear()
+        d = 0
+        for i in str(time):
+            self.segment.set_digit(d, int(i))
+            d = d + 1
+
+        # Toggle colon
+        self.segment.set_colon(2)
+        self.segment.write_display()
+
+    def displayCurrentTime(self):
+        now = datetime.datetime.now()
+        hour = now.hour
+        minute = now.minute
+        second = now.second
+
+        self.segment.clear()
+        # Set hours
+        self.segment.set_digit(0, int(hour / 10))
+        self.segment.set_digit(1, hour % 10)
+        # Set minutes
+        self.segment.set_digit(2, int(minute / 10))
+        self.segment.set_digit(3, minute % 10)
+        # Toggle colon
+        self.segment.set_colon(second % 2)
+
+        self.segment.write_display()
+
+    def getCurrentTime(self):
+        now = datetime.datetime.now()
+        hour = now.hour
+        minute = now.minute
+        return str(hour) + str(minute)
+
+    def getTime(self, stdscr):
+        newAlarm = ""
+        while(len(newAlarm) < 4):
+            # key = getKey(stdscr)
+            key = ""
+            # if len(newAlarm) >= 4:
+            #     return newAlarm
+            if(isinstance(key, int)):
+                newAlarm = newAlarm + str(key)
+                # print(newAlarm)
+            # elif key == 'ENTER':
+            #     return newAlarm
+        if(self.isValidTime(newAlarm)):
+            return newAlarm
+        else:
+            self.displayAlarm("8888")
+            self.getTime(stdscr)
+
+    def isValidTime(input):
+        try:
+            time.strptime(input, '%H%M')
+            return True
+        except ValueError:
+            print("Not Valid Time")
+            return False
+
+
+    # def getKey(stdscr):
+    #     # Store the key value in the variable `c`
+    #     c = stdscr.getch()
+    #     # Clear the terminal
+    #     # stdscr.clear()
+    #     if c == 113:
+    #         return 1
+    #     elif c == 114:
+    #         return 2
+    #     elif c == 115:
+    #         return 3
+    #     elif c == 116:
+    #         return 4
+    #     elif c == 117:
+    #         return 5
+    #     elif c == 118:
+    #         return 6
+    #     elif c == 119:
+    #         return 7
+    #     elif c == 120:
+    #         return 8
+    #     elif c == 121:
+    #         return 9
+    #     elif c == 112:
+    #         return 0
+    #     elif c == curses.KEY_ENTER:
+    #         return 'ENTER'
+
+
+    # def main(stdscr):
+        # clear the screen.. needed?
+    GPIO.output(13, GPIO.LOW)
     # stdscr.clear()
 
+    encoder = RotaryEncoder(ENCODER_A, ENCODER_B, callback=on_turn)
 
-encoder = RotaryEncoder(ENCODER_A, ENCODER_B, callback=on_turn)
+    # Continually update the time on a 4 char, 7-segment display
+    while(True):
+
+        # print("alarm check", getCurrentTime())
+
+        # first check if its alarm time needs to be a isolated loop
+        if getCurrentTime() == ALARM_1:
+            print("Alarm 1 Triggered.")
+            GPIO.output(13, GPIO.HIGH)
+
+        # check all buttons
+        if GPIO.input(4) == False:
+            print("Button 4 Pressed.")
+            displayAlarm(ALARM_1)
+
+        elif GPIO.input(5) == False:
+            print("Encoder 1 Pressed.")
+            GPIO.output(13, GPIO.HIGH)
+            displayAlarm(ALARM_1)
+            # alarm1 = getTime(stdscr)
+            # print(alarm1)
+            # displayAlarm(alarm1)
+            # time.sleep(1)
+
+        elif GPIO.input(6) == False:
+            print("Button 6 Pressed.")
+            # GPIO.output(13, GPIO.HIGH)
+
+        else:
+            # os.system('echo "no button pressed\n"')
+            GPIO.output(13, GPIO.LOW)
+            # displayAlarm(ALARM_1)
+            # displayCurrentTime()
+
+        # if (GPIO.input(6) == False):
+        #     os.system('echo "button 6"')
+        #     setAlarm = input("Enter Alarm Time");
+        #     # print "Alarm time is now" + str(setAlarm);
+        #     displayAlarm(setAlarm)
+        # else:
+        #     displayCurrentTime()
+
+        # go into SETUP mode
+
+            # displayAlarm(alarm1)
+            # # take input and print to screen
+            # alarm1 = getTime(stdscr)
+            # print(alarm1)
+
+        # Wait a quarter second (less than 1 second to prevent colon blinking getting$
+        # Effectively the latency on the inputs
+        time.sleep(0.1)
+
+    # # wrapper is a function that does all of the setup and teardown, and makes sure
+    # # your program cleans up properly if it errors!
+    # wrapper(main)
 
 
 class RotaryEncoder:
@@ -225,65 +284,3 @@ class RotaryEncoder:
         elif channel == self.gpioB and level == 1:
             if self.levA == 1:
                 self.callback(-1)
-
-# Continually update the time on a 4 char, 7-segment display
-while(True):
-
-    # print("alarm check", getCurrentTime())
-
-    # first check if its alarm time needs to be a isolated loop
-    if getCurrentTime() == ALARM_1:
-        print("Alarm 1 Triggered.")
-        GPIO.output(13, GPIO.HIGH)
-
-
-
-    # check all buttons
-    if GPIO.input(4) == False:
-        print("Button 4 Pressed.")
-        displayAlarm(ALARM_1)
-
-    elif GPIO.input(5) == False:
-        print("Encoder 1 Pressed.")
-        GPIO.output(13, GPIO.HIGH)
-        displayAlarm(ALARM_1)
-        # alarm1 = getTime(stdscr)
-        # print(alarm1)
-        # displayAlarm(alarm1)
-        # time.sleep(1)
-
-    elif GPIO.input(6) == False:
-        print("Button 6 Pressed.")
-        # GPIO.output(13, GPIO.HIGH)
-
-    else:
-        # os.system('echo "no button pressed\n"')
-        GPIO.output(13, GPIO.LOW)
-        # displayAlarm(ALARM_1)
-        # displayCurrentTime()
-
-    # if (GPIO.input(6) == False):
-    #     os.system('echo "button 6"')
-    #     setAlarm = input("Enter Alarm Time");
-    #     # print "Alarm time is now" + str(setAlarm);
-    #     displayAlarm(setAlarm)
-    # else:
-    #     displayCurrentTime()
-
-    # go into SETUP mode
-
-        # displayAlarm(alarm1)
-        # # take input and print to screen
-        # alarm1 = getTime(stdscr)
-        # print(alarm1)
-
-
-    # Wait a quarter second (less than 1 second to prevent colon blinking getting$
-    # Effectively the latency on the inputs
-    time.sleep(0.1)
-
-
-
-# # wrapper is a function that does all of the setup and teardown, and makes sure
-# # your program cleans up properly if it errors!
-# wrapper(main)
