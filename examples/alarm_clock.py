@@ -100,7 +100,7 @@ class AlarmClock:
             # Effectively the latency on the inputs
             time.sleep(0.1)
 
-    def getNextSeqNum(number):
+    def getNextSeqNum(self, number):
         number += 1
         return format(number, '04d')
 
@@ -109,14 +109,10 @@ class AlarmClock:
         print("encoder turned")
         print(delta)
         if delta == 1:
-            self.getNextSeqNum(self.ALARM_2)
-            print(self.ALARM_2)
-            self.displayAlarm(self.ALARM_2)
+            self.displayAlarm(self.getNextSeqNum(self.ALARM_2))
 
         elif delta == -1:
-            self.getNextSeqNum(self.ALARM_2)
-            print(self.ALARM_2)
-            self.displayAlarm(self.ALARM_2)
+            self.displayAlarm(self.getNextSeqNum(self.ALARM_2))
 
 
 
@@ -175,7 +171,7 @@ class AlarmClock:
             self.displayAlarm("8888")
             self.getTime(stdscr)
 
-    def isValidTime(input):
+    def isValidTime(self, input):
         try:
             time.strptime(input, '%H%M')
             return True
