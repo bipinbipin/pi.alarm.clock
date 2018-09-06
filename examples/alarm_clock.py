@@ -109,9 +109,9 @@ class AlarmClock:
         print("encoder turned")
         print(delta)
         if delta == 1:
-            nextnumber = self.getNextSeqNum(self.ALARM_2)
-            print(nextnumber)
-            self.displayAlarm(nextnumber)
+            self.ALARM_2 = self.getNextSeqNum(self.ALARM_2)
+            print(self.ALARM_2)
+            self.displayAlarm(self.ALARM_2)
 
         elif delta == -1:
             self.displayAlarm(self.getNextSeqNum(self.ALARM_2))
