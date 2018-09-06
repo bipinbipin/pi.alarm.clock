@@ -101,7 +101,7 @@ class AlarmClock:
             time.sleep(0.1)
 
     def getNextSeqNum(self, number):
-        number += 1
+        number = int(number) + 1
         return format(number, '04d')
 
 
