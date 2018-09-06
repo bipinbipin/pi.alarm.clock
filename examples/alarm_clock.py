@@ -109,7 +109,9 @@ class AlarmClock:
         print("encoder turned")
         print(delta)
         if delta == 1:
-            self.displayAlarm(self.getNextSeqNum(self.ALARM_2))
+            nextnumber = self.getNextSeqNum(self.ALARM_2)
+            print(nextnumber)
+            self.displayAlarm(nextnumber)
 
         elif delta == -1:
             self.displayAlarm(self.getNextSeqNum(self.ALARM_2))
@@ -295,4 +297,5 @@ class RotaryEncoder:
                 self.callback(-1)
 
 
+# call the class to instantiate and run
 AlarmClock()
