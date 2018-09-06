@@ -101,8 +101,7 @@ class AlarmClock:
             time.sleep(0.1)
 
     def getNextSeqNum(self, number):
-        number += 1
-        return format(number, '04d')
+        return format(number + 1, '04d')
 
 
     def on_turn(self, delta):
@@ -110,7 +109,7 @@ class AlarmClock:
         print(delta)
         if delta == 1:
             self.ALARM_2 = self.getNextSeqNum(self.ALARM_2)
-            print(self.ALARM_2)
+            print(str(self.ALARM_2))
             self.displayAlarm(self.ALARM_2)
 
         elif delta == -1:
