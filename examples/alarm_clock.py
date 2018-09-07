@@ -68,6 +68,12 @@ class AlarmClock:
                     self.segment.set_decimal(3, True)
                     self.segment.write_display()
 
+                if self._MODE_SET_TIME_HOURS:
+                    print(self.HOUR_BUFFER)
+                    self.segment.set_decimal(0, True)
+                    self.segment.set_decimal(1, True)
+                    self.segment.write_display()
+
             else:
                 # first check if its alarm time needs to be a isolated loop
                 if self.current_time() == self.ALARM_1:
