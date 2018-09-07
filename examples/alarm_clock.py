@@ -154,7 +154,7 @@ class AlarmClock:
 
     def display_minutes(self):
         display_minutes = str(format(self.MINUTE_BUFFER, '02d'))
-        display_hours = str(format(self.MINUTE_BUFFER, '02d'))
+        display_hours = str(format(self.HOUR_BUFFER, '02d'))
         display_string = display_hours + display_minutes
         self.display_time(display_string)
         self.segment.set_decimal(2, True)
