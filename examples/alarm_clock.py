@@ -51,17 +51,11 @@ class AlarmClock:
 
     # Modes
     _MODE_SET_TIME = True
-    _MODE_SET_TIME_MINUTES = True
-    _MODE_SET_TIME_HOURS = False
+    _MODE_SET_TIME_MINUTES = False
+    _MODE_SET_TIME_HOURS = True
     _MODE_DISPLAY_TIME = False
 
-    def display_minutes(self):
-        display_string = str(format(self.MINUTE_BUFFER, '02d'))
-        self.segment.set_digit(2, int(display_string[0]))
-        self.segment.set_digit(3, int(display_string[1]))
-        self.segment.set_decimal(2, True)
-        self.segment.set_decimal(3, True)
-        self.segment.write_display()
+
 
     def mainloop(self):
         print("Main Loop Executing")
@@ -73,10 +67,7 @@ class AlarmClock:
                     self.display_minutes()
 
                 if self._MODE_SET_TIME_HOURS:
-                    print(self.HOUR_BUFFER)
-                    self.segment.set_decimal(0, True)
-                    self.segment.set_decimal(1, True)
-                    self.segment.write_display()
+                    self.display_hours()
 
             else:
                 # first check if its alarm time needs to be a isolated loop
@@ -142,16 +133,21 @@ class AlarmClock:
                 if self.HOUR_MAX >= (self.HOUR_BUFFER + delta) >= self.HOUR_MIN:
                     self.HOUR_BUFFER += delta
 
-        # print("encoder turned")
-        # print(delta)
-        # self.ALARM_2 = self.getNextSeqNum(self.ALARM_2, delta)
-        # self.display_time(self.ALARM_2)
-        # if delta == 1:
-        #     self.ALARM_2 = self.getNextSeqNum(self.ALARM_2)
-        #     self.displayAlarm(self.ALARM_2)
-        #
-        # elif delta == -1:
-        #     self.displayAlarm(self.getNextSeqNum(self.ALARM_2))
+    def display_minutes(self):
+        display_string = str(format(self.MINUTE_BUFFER, '02d'))
+        self.segment.set_digit(2, int(display_string[0]))
+        self.segment.set_digit(3, int(display_string[1]))
+        self.segment.set_decimal(2, True)
+        self.segment.set_decimal(3, True)
+        self.segment.write_display()
+
+    def display_hours(self):
+        display_string = str(format(self.HOUR_BUFFER, '02d'))
+        self.segment.set_digit(0, int(display_string[0]))
+        self.segment.set_digit(1, int(display_string[1]))
+        self.segment.set_decimal(0, True)
+        self.segment.set_decimal(1, True)
+        self.segment.write_display()
 
     def display_time(self, time_value):
         self.segment.clear()
