@@ -26,7 +26,7 @@ class AlarmClock:
     # Encoder PINS
     ENCODER_A = 17
     ENCODER_B = 22
-    ENCODER_BUTTON =
+    ENCODER_BUTTON = 5
 
     # Minute Buffer
     MINUTE_BUFFER = 00
