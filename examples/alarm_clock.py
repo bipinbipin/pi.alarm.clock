@@ -52,7 +52,6 @@ class AlarmClock:
 
     # Alarm
     ALARM_1 = "0000"
-    ALARM_2 = 0
 
     # Modes
     _MODE_SET_TIME = False
@@ -83,6 +82,7 @@ class AlarmClock:
                     if self.encoder_button_pressed():
                         self._MODE_SET_TIME_MINUTES = False
                         self._MODE_SET_TIME = False
+                        self.save_alarm()
                     self.display_minutes()
 
 
@@ -173,6 +173,11 @@ class AlarmClock:
         self.segment.set_decimal(0, True)
         self.segment.set_decimal(1, True)
         self.segment.write_display()
+
+    def save_alarm(self):
+        minutes = str(format(self.MINUTE_BUFFER, '02d'))
+        hours = str(format(self.HOUR_BUFFER, '02d'))
+        self.ALARM_1 = hours + minutes
 
     def display_time(self, time_value):
         self.segment.clear()
