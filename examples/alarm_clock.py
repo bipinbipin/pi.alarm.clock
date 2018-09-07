@@ -72,18 +72,20 @@ class AlarmClock:
         # Continually update the 7-segment display
         while True:
             if self._MODE_SET_TIME:
-                if self._MODE_SET_TIME_MINUTES:
-                    if self.encoder_button_pressed():
-                        self._MODE_SET_TIME_MINUTES = False
-                        self._MODE_SET_TIME_HOURS = True
-                        time.sleep(0.5)
-                    self.display_minutes()
-
                 if self._MODE_SET_TIME_HOURS:
                     if self.encoder_button_pressed():
                         self._MODE_SET_TIME_HOURS = False
-                        self._MODE_SET_TIME = False
+                        self._MODE_SET_TIME_MINUTES = True
+                        time.sleep(0.4)
                     self.display_hours()
+
+                if self._MODE_SET_TIME_MINUTES:
+                    if self.encoder_button_pressed():
+                        self._MODE_SET_TIME_MINUTES = False
+                        self._MODE_SET_TIME = False
+                    self.display_minutes()
+
+
 
             else:
                 # first check if its alarm time needs to be a isolated loop
@@ -108,7 +110,7 @@ class AlarmClock:
                 elif GPIO.input(6) == False:
                     print("Button 6 Pressed.")
                     self._MODE_SET_TIME = True
-                    self._MODE_SET_TIME_MINUTES = True
+                    self._MODE_SET_TIME_HOURS = True
                     # print(self._MODE_SET_TIME)
                     # GPIO.output(13, GPIO.HIGH)
 
@@ -153,10 +155,10 @@ class AlarmClock:
                     self.HOUR_BUFFER += delta
 
     def display_minutes(self):
-        display_minutes = str(format(self.MINUTE_BUFFER, '02d'))
-        display_hours = str(format(self.HOUR_BUFFER, '02d'))
-        display_string = display_hours + display_minutes
-        self.display_time(display_string)
+        self.segment.clear()
+        display_string = str(format(self.MINUTE_BUFFER, '02d'))
+        self.segment.set_digit(2, int(display_string[0]))
+        self.segment.set_digit(3, int(display_string[1]))
         self.segment.set_decimal(2, True)
         self.segment.set_decimal(3, True)
         self.segment.write_display()
