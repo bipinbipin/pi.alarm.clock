@@ -126,8 +126,7 @@ class AlarmClock:
         if self._MODE_SET_TIME:
             # DETERMINE HOURS OR MINUTE MODE
             if self._MODE_SET_TIME_MINUTES:
-                print('set minutes mode')
-                if self.MINUTE_MAX > self.MINUTE_BUFFER + delta > self.MINUTE_MIN:
+                if self.MINUTE_MAX > self.MINUTE_BUFFER > self.MINUTE_MIN:
                     self.MINUTE_BUFFER += delta
             if self._MODE_SET_TIME_HOURS:
                 if not (self.HOUR_BUFFER == self.HOUR_MAX or self.HOUR_BUFFER == self.HOUR_MIN):
