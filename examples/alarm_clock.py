@@ -28,6 +28,10 @@ class AlarmClock:
     ENCODER_B = 22
     ENCODER_BUTTON = 5
 
+    # Button PINS
+    SET_BUTTON = 6
+
+
     # Minute Buffer
     MINUTE_BUFFER = 00
     MINUTE_MIN = 00
@@ -59,6 +63,9 @@ class AlarmClock:
     def encoder_button_pressed(self):
         return not GPIO.input(self.ENCODER_BUTTON)
 
+    def set_button_pressed(self):
+        return not GPIO.input(self.SET_BUTTON)
+
     def mainloop(self):
         print("Main Loop Executing")
 
@@ -72,7 +79,7 @@ class AlarmClock:
                     self.display_minutes()
 
                 if self._MODE_SET_TIME_HOURS:
-                    if self.encoder_button_pressed():
+                    if self.set_button_pressed():
                         self._MODE_SET_TIME_HOURS = False
                         self._MODE_SET_TIME = False
                     self.display_hours()
