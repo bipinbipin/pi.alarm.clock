@@ -212,9 +212,9 @@ class AlarmClock:
 
     def current_time(self):
         now = datetime.datetime.now()
-        hour = now.hour
-        minute = now.minute
-        return str(hour) + str(minute)
+        minutes = str(format(now.minute, '02d'))
+        hours = str(format(now.hour, '02d'))
+        return hours + minutes
 
     def getTime(self, stdscr):
         newAlarm = ""
