@@ -92,6 +92,8 @@ class AlarmClock:
                 if self.current_time() == self.ALARM_1:
                     print("Alarm 1 Triggered.")
                     GPIO.output(13, GPIO.HIGH)
+                else:
+                    GPIO.output(13, GPIO.LOW)
 
                 # check all buttons
                 if GPIO.input(4) == False:
@@ -116,7 +118,7 @@ class AlarmClock:
 
                 else:
                     # os.system('echo "no button pressed\n"')
-                    GPIO.output(13, GPIO.LOW)
+                    # GPIO.output(13, GPIO.LOW)
                     # displayAlarm(ALARM_1)
                     self.displayCurrentTime()
 
