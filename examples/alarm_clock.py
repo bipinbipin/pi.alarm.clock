@@ -58,6 +58,9 @@ class AlarmClock:
     def display_minutes(self):
         display_number = format(self.MINUTE_BUFFER, '02d')
         print(display_number)
+        print(int(str(display_number)[:1]))
+        print(int(str(display_number)[:2]))
+
         self.segment.set_digit(2, int(str(display_number)[:1]))
         self.segment.set_digit(3, int(str(display_number)[:2]))
         self.segment.set_decimal(2, True)
