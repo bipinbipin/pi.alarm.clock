@@ -100,7 +100,8 @@ class AlarmClock:
                 elif GPIO.input(6) == False:
                     print("Button 6 Pressed.")
                     self._MODE_SET_TIME = True
-                    print(self._MODE_SET_TIME)
+                    self._MODE_SET_TIME_MINUTES = True
+                    # print(self._MODE_SET_TIME)
                     # GPIO.output(13, GPIO.HIGH)
 
                 else:
