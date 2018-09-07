@@ -179,6 +179,7 @@ class AlarmClock:
         hours = str(format(self.HOUR_BUFFER, '02d'))
         self.ALARM_1 = hours + minutes
         print(self.ALARM_1)
+        print(self.current_time())
 
     def display_time(self, time_value):
         self.segment.clear()
