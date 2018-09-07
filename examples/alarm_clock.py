@@ -51,13 +51,12 @@ class AlarmClock:
 
     # Modes
     _MODE_SET_TIME = True
-    _MODE_SET_TIME_MINUTES = False
-    _MODE_SET_TIME_HOURS = True
+    _MODE_SET_TIME_MINUTES = True
+    _MODE_SET_TIME_HOURS = False
     _MODE_DISPLAY_TIME = False
 
     def display_minutes(self):
         display_number = format(self.MINUTE_BUFFER, '02d')
-
         self.segment.set_digit(2, int(str(display_number)[:1]))
         self.segment.set_digit(3, int(str(display_number)[:2]))
         self.segment.set_decimal(2, True)
