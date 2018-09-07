@@ -118,7 +118,7 @@ class AlarmClock:
                     # os.system('echo "no button pressed\n"')
                     GPIO.output(13, GPIO.LOW)
                     # displayAlarm(ALARM_1)
-                    # displayCurrentTime()
+                    self.displayCurrentTime()
 
                 # if (GPIO.input(6) == False):
                 #     os.system('echo "button 6"')
