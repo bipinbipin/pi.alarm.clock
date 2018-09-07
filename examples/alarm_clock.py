@@ -31,7 +31,9 @@ class AlarmClock:
     MINUTE_MIN = 00
     MINUTE_MAX = 59
 
-
+    # Hour Buffer
+    HOUR_MIN = 00
+    HOUR_MAX = 23
 
     # GPIO Setup
     GPIO.setwarnings(False)
@@ -47,67 +49,72 @@ class AlarmClock:
 
     def mainloop(self):
         print("Main Loop Executing")
+        _MODE_SET_TIME = True
+        _MODE_DISPLAY_TIME = False
+
         # Continually update the time on a 4 char, 7-segment display
-        while (True):
-
-            # print("alarm check", getCurrentTime())
-
-            # first check if its alarm time needs to be a isolated loop
-            if self.getCurrentTime() == self.ALARM_1:
-                print("Alarm 1 Triggered.")
-                GPIO.output(13, GPIO.HIGH)
-
-            # check all buttons
-            if GPIO.input(4) == False:
-                print("Button 4 Pressed.")
-                self.displayAlarm(self.ALARM_1)
-
-            elif GPIO.input(5) == False:
-                print("Encoder 1 Pressed.")
-                GPIO.output(13, GPIO.HIGH)
-                self.displayAlarm(self.ALARM_1)
-                # alarm1 = getTime(stdscr)
-                # print(alarm1)
-                # displayAlarm(alarm1)
-                # time.sleep(1)
-
-            elif GPIO.input(6) == False:
-                print("Button 6 Pressed.")
-                # GPIO.output(13, GPIO.HIGH)
+        while True:
+            if _MODE_SET_TIME:
+                self.segment.set_decimal(2, True)
+                self.segment.set_decimal(3, True)
+                self.segment.write_display()
 
             else:
-                # os.system('echo "no button pressed\n"')
-                GPIO.output(13, GPIO.LOW)
-                # displayAlarm(ALARM_1)
-                # displayCurrentTime()
+                # first check if its alarm time needs to be a isolated loop
+                if self.getCurrentTime() == self.ALARM_1:
+                    print("Alarm 1 Triggered.")
+                    GPIO.output(13, GPIO.HIGH)
 
-            # if (GPIO.input(6) == False):
-            #     os.system('echo "button 6"')
-            #     setAlarm = input("Enter Alarm Time");
-            #     # print "Alarm time is now" + str(setAlarm);
-            #     displayAlarm(setAlarm)
-            # else:
-            #     displayCurrentTime()
+                # check all buttons
+                if GPIO.input(4) == False:
+                    print("Button 4 Pressed.")
+                    self.displayAlarm(self.ALARM_1)
 
-            # go into SETUP mode
+                elif GPIO.input(5) == False:
+                    print("Encoder 1 Pressed.")
+                    GPIO.output(13, GPIO.HIGH)
+                    self.displayAlarm(self.ALARM_1)
+                    # alarm1 = getTime(stdscr)
+                    # print(alarm1)
+                    # displayAlarm(alarm1)
+                    # time.sleep(1)
 
-            # displayAlarm(alarm1)
-            # # take input and print to screen
-            # alarm1 = getTime(stdscr)
-            # print(alarm1)
+                elif GPIO.input(6) == False:
+                    print("Button 6 Pressed.")
+                    # GPIO.output(13, GPIO.HIGH)
 
-            # Wait a quarter second (less than 1 second to prevent colon blinking getting$
-            # Effectively the latency on the inputs
+                else:
+                    # os.system('echo "no button pressed\n"')
+                    GPIO.output(13, GPIO.LOW)
+                    # displayAlarm(ALARM_1)
+                    # displayCurrentTime()
+
+                # if (GPIO.input(6) == False):
+                #     os.system('echo "button 6"')
+                #     setAlarm = input("Enter Alarm Time");
+                #     # print "Alarm time is now" + str(setAlarm);
+                #     displayAlarm(setAlarm)
+                # else:
+                #     displayCurrentTime()
+
+                # go into SETUP mode
+
+                # displayAlarm(alarm1)
+                # # take input and print to screen
+                # alarm1 = getTime(stdscr)
+                # print(alarm1)
+
+                # Wait a quarter second (less than 1 second to prevent colon blinking getting$
+                # Effectively the latency on the inputs
             time.sleep(0.1)
 
     def getNextSeqNum(self, number, incr):
         number = int(number) + incr
         return format(number, '04d')
 
-
     def on_turn(self, delta):
-        print("encoder turned")
-        print(delta)
+        # print("encoder turned")
+        # print(delta)
         self.ALARM_2 = self.getNextSeqNum(self.ALARM_2, delta)
         self.displayAlarm(self.ALARM_2)
         # if delta == 1:
@@ -116,10 +123,6 @@ class AlarmClock:
         #
         # elif delta == -1:
         #     self.displayAlarm(self.getNextSeqNum(self.ALARM_2))
-
-
-
-
 
     def displayAlarm(self, time):
         self.segment.clear()
