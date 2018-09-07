@@ -28,10 +28,12 @@ class AlarmClock:
     ENCODER_B = 22
 
     # Minute Buffer
+    MINUTE_BUFFER = 00
     MINUTE_MIN = 00
     MINUTE_MAX = 59
 
     # Hour Buffer
+    HOUR_BUFFER = 00
     HOUR_MIN = 00
     HOUR_MAX = 23
 
@@ -47,33 +49,40 @@ class AlarmClock:
     ALARM_1 = "0000"
     ALARM_2 = 0
 
+    # Modes
+    _MODE_SET_TIME = True
+    _MODE_SET_TIME_MINUTES = True
+    _MODE_SET_TIME_HOURS = False
+    _MODE_DISPLAY_TIME = False
+
     def mainloop(self):
         print("Main Loop Executing")
-        _MODE_SET_TIME = True
-        _MODE_DISPLAY_TIME = False
+
 
         # Continually update the time on a 4 char, 7-segment display
         while True:
-            if _MODE_SET_TIME:
-                self.segment.set_decimal(2, True)
-                self.segment.set_decimal(3, True)
-                self.segment.write_display()
+            if self._MODE_SET_TIME:
+                if self._MODE_SET_TIME_MINUTES:
+                    print(self.MINUTE_BUFFER)
+                    self.segment.set_decimal(2, True)
+                    self.segment.set_decimal(3, True)
+                    self.segment.write_display()
 
             else:
                 # first check if its alarm time needs to be a isolated loop
-                if self.getCurrentTime() == self.ALARM_1:
+                if self.current_time() == self.ALARM_1:
                     print("Alarm 1 Triggered.")
                     GPIO.output(13, GPIO.HIGH)
 
                 # check all buttons
                 if GPIO.input(4) == False:
                     print("Button 4 Pressed.")
-                    self.displayAlarm(self.ALARM_1)
+                    self.display_time(self.ALARM_1)
 
                 elif GPIO.input(5) == False:
                     print("Encoder 1 Pressed.")
                     GPIO.output(13, GPIO.HIGH)
-                    self.displayAlarm(self.ALARM_1)
+                    self.display_time(self.ALARM_1)
                     # alarm1 = getTime(stdscr)
                     # print(alarm1)
                     # displayAlarm(alarm1)
@@ -113,10 +122,20 @@ class AlarmClock:
         return format(number, '04d')
 
     def on_turn(self, delta):
+        # ONLY ACT WHEN IN 'SET TIME' MODE
+        if self._MODE_SET_TIME:
+            # DETERMINE HOURS OR MINUTE MODE
+            if self._MODE_SET_TIME_MINUTES:
+                if not (self.MINUTE_BUFFER == self.MINUTE_MAX or self.MINUTE_BUFFER == self.MINUTE_MIN):
+                    self.MINUTE_BUFFER += delta
+            if self._MODE_SET_TIME_HOURS:
+                if not (self.HOUR_BUFFER == self.HOUR_MAX or self.HOUR_BUFFER == self.HOUR_MIN):
+                    self.HOUR_BUFFER += delta
+
         # print("encoder turned")
         # print(delta)
-        self.ALARM_2 = self.getNextSeqNum(self.ALARM_2, delta)
-        self.displayAlarm(self.ALARM_2)
+        # self.ALARM_2 = self.getNextSeqNum(self.ALARM_2, delta)
+        # self.display_time(self.ALARM_2)
         # if delta == 1:
         #     self.ALARM_2 = self.getNextSeqNum(self.ALARM_2)
         #     self.displayAlarm(self.ALARM_2)
@@ -124,10 +143,10 @@ class AlarmClock:
         # elif delta == -1:
         #     self.displayAlarm(self.getNextSeqNum(self.ALARM_2))
 
-    def displayAlarm(self, time):
+    def display_time(self, time_value):
         self.segment.clear()
         d = 0
-        for i in str(time):
+        for i in str(time_value):
             self.segment.set_digit(d, int(i))
             d = d + 1
 
@@ -153,7 +172,7 @@ class AlarmClock:
 
         self.segment.write_display()
 
-    def getCurrentTime(self):
+    def current_time(self):
         now = datetime.datetime.now()
         hour = now.hour
         minute = now.minute
@@ -174,7 +193,7 @@ class AlarmClock:
         if(self.isValidTime(newAlarm)):
             return newAlarm
         else:
-            self.displayAlarm("8888")
+            self.display_time("8888")
             self.getTime(stdscr)
 
     def isValidTime(self, input):
