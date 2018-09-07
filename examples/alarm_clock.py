@@ -153,14 +153,16 @@ class AlarmClock:
                     self.HOUR_BUFFER += delta
 
     def display_minutes(self):
-        display_string = str(format(self.MINUTE_BUFFER, '02d'))
-        self.segment.set_digit(2, int(display_string[0]))
-        self.segment.set_digit(3, int(display_string[1]))
+        display_minutes = str(format(self.MINUTE_BUFFER, '02d'))
+        display_hours = str(format(self.MINUTE_BUFFER, '02d'))
+        display_string = display_hours + display_minutes
+        self.display_time(display_string)
         self.segment.set_decimal(2, True)
         self.segment.set_decimal(3, True)
         self.segment.write_display()
 
     def display_hours(self):
+        self.segment.clear()
         display_string = str(format(self.HOUR_BUFFER, '02d'))
         self.segment.set_digit(0, int(display_string[0]))
         self.segment.set_digit(1, int(display_string[1]))
