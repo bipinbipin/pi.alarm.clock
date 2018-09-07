@@ -55,18 +55,23 @@ class AlarmClock:
     _MODE_SET_TIME_HOURS = True
     _MODE_DISPLAY_TIME = False
 
+    def display_minutes(self):
+        display_number = format(self.MINUTE_BUFFER, '02d')
+
+        self.segment.set_digit(2, int(str(display_number)[:1]))
+        self.segment.set_digit(3, int(str(display_number)[:2]))
+        self.segment.set_decimal(2, True)
+        self.segment.set_decimal(3, True)
+        self.segment.write_display()
+
     def mainloop(self):
         print("Main Loop Executing")
 
-
-        # Continually update the time on a 4 char, 7-segment display
+        # Continually update the 7-segment display
         while True:
             if self._MODE_SET_TIME:
                 if self._MODE_SET_TIME_MINUTES:
-                    print(self.MINUTE_BUFFER)
-                    self.segment.set_decimal(2, True)
-                    self.segment.set_decimal(3, True)
-                    self.segment.write_display()
+                    self.display_minutes()
 
                 if self._MODE_SET_TIME_HOURS:
                     print(self.HOUR_BUFFER)
