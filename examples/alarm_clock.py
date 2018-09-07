@@ -125,7 +125,7 @@ class AlarmClock:
 
                 # Wait a quarter second (less than 1 second to prevent colon blinking getting$
                 # Effectively the latency on the inputs
-            time.sleep(1)
+            time.sleep(0.05)
 
     def getNextSeqNum(self, number, incr):
         number = int(number) + incr
