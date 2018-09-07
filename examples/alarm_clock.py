@@ -76,10 +76,11 @@ class AlarmClock:
                     if self.encoder_button_pressed():
                         self._MODE_SET_TIME_MINUTES = False
                         self._MODE_SET_TIME_HOURS = True
+                        time.sleep(0.5)
                     self.display_minutes()
 
                 if self._MODE_SET_TIME_HOURS:
-                    if self.set_button_pressed():
+                    if self.encoder_button_pressed():
                         self._MODE_SET_TIME_HOURS = False
                         self._MODE_SET_TIME = False
                     self.display_hours()
