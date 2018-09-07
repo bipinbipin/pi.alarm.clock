@@ -51,8 +51,8 @@ class AlarmClock:
 
     # Modes
     _MODE_SET_TIME = True
-    _MODE_SET_TIME_MINUTES = True
-    _MODE_SET_TIME_HOURS = False
+    _MODE_SET_TIME_MINUTES = False
+    _MODE_SET_TIME_HOURS = True
     _MODE_DISPLAY_TIME = False
 
     def mainloop(self):
@@ -129,7 +129,7 @@ class AlarmClock:
                 if self.MINUTE_MAX >= (self.MINUTE_BUFFER + delta) >= self.MINUTE_MIN:
                     self.MINUTE_BUFFER += delta
             if self._MODE_SET_TIME_HOURS:
-                if not (self.HOUR_BUFFER == self.HOUR_MAX or self.HOUR_BUFFER == self.HOUR_MIN):
+                if self.HOUR_MAX >= (self.HOUR_BUFFER + delta) >= self.HOUR_MIN:
                     self.HOUR_BUFFER += delta
 
         # print("encoder turned")
