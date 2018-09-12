@@ -31,6 +31,7 @@ class AlarmClock:
 
     # Button PINS
     SET_BUTTON = 6
+    CHANGE_ALARM_BUTTON = 4
 
 
     # Minute Buffer
@@ -67,13 +68,18 @@ class AlarmClock:
     def set_button_pressed(self):
         return not GPIO.input(self.SET_BUTTON)
 
+    def change_alarm_button_pressed(self):
+        return not GPIO.input(self.CHANGE_ALARM_BUTTON)
+
     def mainloop(self):
         print("Main Loop Executing")
 
         loop_interval = 0.05
 
-        # Continually update the 7-segment display
         while True:
+
+            # CHECK THE MODE
+            # CAREFUL TO ONLY HAVE ONE MODE TRUE!!
             if self._MODE_SET_TIME:
                 if self._MODE_SET_TIME_HOURS:
                     if self.encoder_button_pressed():
@@ -89,39 +95,34 @@ class AlarmClock:
                         self.save_alarm()
                     self.display_minutes()
 
-            if self._MODE_ALARM_ENGAGED:
+            elif self._MODE_ALARM_ENGAGED:
                 if self.encoder_button_pressed():
                     self._MODE_ALARM_ENGAGED = False
+                    GPIO.output(13, GPIO.LOW)
                 else:
                     print("Alarm 1 Triggered.")
                     call(["flite", "wake the fuck up!"])
+                    GPIO.output(13, GPIO.HIGH)
                     loop_interval = 1
 
-            else:
-                # first check if its alarm time needs to be a isolated loop
+            elif self._MODE_DISPLAY_TIME:
+
+                # IS IT ALARM TIME?
                 if self.current_time() == self.ALARM_1:
                     self._MODE_ALARM_ENGAGED = True
-                    GPIO.output(13, GPIO.HIGH)
-                else:
-                    GPIO.output(13, GPIO.LOW)
 
-                # check all buttons
-                if GPIO.input(4) == False:
-                    print("Button 4 Pressed.")
-                    self.display_time(self.ALARM_1)
-
-                elif self.encoder_button_pressed():
-                    print("Encoder 1 Pressed.")
-                    GPIO.output(13, GPIO.HIGH)
-                    self.display_time(self.ALARM_1)
-
-                elif GPIO.input(6) == False:
+                # CHANGE ALARM TIME
+                elif self.change_alarm_button_pressed():
                     print("Button 6 Pressed.")
                     self._MODE_SET_TIME = True
                     self._MODE_SET_TIME_HOURS = True
-                    # print(self._MODE_SET_TIME)
-                    # GPIO.output(13, GPIO.HIGH)
 
+                # SHOW CURRENT ALARM TIME
+                elif self.encoder_button_pressed():
+                    print("Encoder 1 Pressed.")
+                    self.display_time(self.ALARM_1)
+
+                # SHOW CURRENT TIME
                 else:
                     self.displayCurrentTime()
                     loop_interval = 0.05
