@@ -60,7 +60,7 @@ class AlarmClock:
     _MODE_SET_TIME = False
     _MODE_SET_TIME_MINUTES = False
     _MODE_SET_TIME_HOURS = False
-    _MODE_DISPLAY_TIME = False
+    _MODE_DISPLAY_TIME = True
 
     def encoder_button_pressed(self):
         return not GPIO.input(self.ENCODER_BUTTON)
