@@ -5,6 +5,7 @@ import datetime
 import RPi.GPIO as GPIO
 
 from Adafruit_LED_Backpack import SevenSegment
+from subprocess import call
 
 class AlarmClock:
 
@@ -91,6 +92,7 @@ class AlarmClock:
                 # first check if its alarm time needs to be a isolated loop
                 if self.current_time() == self.ALARM_1:
                     print("Alarm 1 Triggered.")
+                    call(["flite", "wake the fuck up!"])
                     GPIO.output(13, GPIO.HIGH)
                 else:
                     GPIO.output(13, GPIO.LOW)
