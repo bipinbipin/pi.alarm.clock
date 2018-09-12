@@ -100,7 +100,7 @@ class AlarmClock:
             else:
                 # first check if its alarm time needs to be a isolated loop
                 if self.current_time() == self.ALARM_1:
-
+                    self._MODE_ALARM_ENGAGED = True
                     GPIO.output(13, GPIO.HIGH)
                 else:
                     GPIO.output(13, GPIO.LOW)
@@ -123,12 +123,8 @@ class AlarmClock:
                     # GPIO.output(13, GPIO.HIGH)
 
                 else:
-                    # os.system('echo "no button pressed\n"')
-                    # GPIO.output(13, GPIO.LOW)
-                    # displayAlarm(ALARM_1)
                     self.displayCurrentTime()
                     loop_interval = 0.05
-
 
             time.sleep(loop_interval)
 
