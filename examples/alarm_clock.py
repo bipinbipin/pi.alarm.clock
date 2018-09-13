@@ -100,7 +100,8 @@ class AlarmClock:
                 if self.encoder_button_pressed():
                     alarm_expire_time = 0
                     # comment
-                    print("alarm disabled = " + alarm_expire_time)
+                    print("alarm disabled = ", end =" ")
+                    print(alarm_expire_time)
                     self._MODE_ALARM_ENGAGED = False
                     self._MODE_DISPLAY_TIME = True
                     GPIO.output(13, GPIO.LOW)
@@ -117,7 +118,8 @@ class AlarmClock:
                 # IS IT ALARM TIME?
                 # HAS THE ALARM JUST BEEN DISENGAGED?
                 if self.current_time() == self.ALARM_1 and not self.current_time() == alarm_expire_time:
-                    print("setting expire time: " + alarm_expire_time)
+                    print("setting expire time: ", end =" ")
+                    print(alarm_expire_time)
                     alarm_expire_time = self.current_time()
                     self._MODE_DISPLAY_TIME = False
                     self._MODE_ALARM_ENGAGED = True
