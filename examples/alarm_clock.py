@@ -110,10 +110,11 @@ class AlarmClock:
                     loop_interval = 3
 
             elif self._MODE_DISPLAY_TIME:
-
+                print(alarm_expire_time)
                 # IS IT ALARM TIME?
                 # HAS THE ALARM JUST BEEN DISENGAGED?
                 if self.current_time() == self.ALARM_1 and not self.current_time() == alarm_expire_time:
+                    print("setting expire time: " + alarm_expire_time)
                     alarm_expire_time = self.current_time()
                     self._MODE_ALARM_ENGAGED = True
 
