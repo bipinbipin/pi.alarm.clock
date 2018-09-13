@@ -99,6 +99,7 @@ class AlarmClock:
             elif self._MODE_ALARM_ENGAGED:
                 if self.encoder_button_pressed():
                     alarm_expire_time = 0
+                    # comment
                     print("alarm disabled = " + alarm_expire_time)
                     self._MODE_ALARM_ENGAGED = False
                     self._MODE_DISPLAY_TIME = True
