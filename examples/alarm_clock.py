@@ -106,13 +106,14 @@ class AlarmClock:
                     print("Alarm 1 Triggered.")
                     call(["flite", "wake the fuck up!"])
                     GPIO.output(13, GPIO.HIGH)
-                    loop_interval = 1
+                    print(alarm_expire_time)
+                    loop_interval = 3
 
             elif self._MODE_DISPLAY_TIME:
 
                 # IS IT ALARM TIME?
                 # HAS THE ALARM JUST BEEN DISENGAGED?
-                if self.current_time() == self.ALARM_1 or not self.current_time() == alarm_expire_time:
+                if self.current_time() == self.ALARM_1 and not self.current_time() == alarm_expire_time:
                     alarm_expire_time = self.current_time()
                     self._MODE_ALARM_ENGAGED = True
 
