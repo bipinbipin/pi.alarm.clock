@@ -75,6 +75,7 @@ class AlarmClock:
         print("Main Loop Executing")
 
         loop_interval = 0.05
+        alarm_expire_time = 0
 
         while True:
 
@@ -97,9 +98,11 @@ class AlarmClock:
 
             elif self._MODE_ALARM_ENGAGED:
                 if self.encoder_button_pressed():
+                    alarm_expire_time = 0
                     self._MODE_ALARM_ENGAGED = False
                     GPIO.output(13, GPIO.LOW)
                 else:
+                    # ALARM IS HAPPENING!!
                     print("Alarm 1 Triggered.")
                     call(["flite", "wake the fuck up!"])
                     GPIO.output(13, GPIO.HIGH)
@@ -108,11 +111,13 @@ class AlarmClock:
             elif self._MODE_DISPLAY_TIME:
 
                 # IS IT ALARM TIME?
-                if self.current_time() == self.ALARM_1:
+                # HAS THE ALARM JUST BEEN DISENGAGED?
+                if self.current_time() == self.ALARM_1 and not self.current_time() == alarm_expire_time:
+                    alarm_expire_time = self.current_time()
                     self._MODE_ALARM_ENGAGED = True
 
                 # CHANGE ALARM TIME
-                elif self.change_alarm_button_pressed():
+                if self.change_alarm_button_pressed():
                     print("Button 6 Pressed.")
                     self._MODE_SET_TIME = True
                     self._MODE_SET_TIME_HOURS = True
@@ -128,10 +133,6 @@ class AlarmClock:
                     loop_interval = 0.05
 
             time.sleep(loop_interval)
-
-    def getNextSeqNum(self, number, incr):
-        number = int(number) + incr
-        return format(number, '04d')
 
     def on_turn(self, delta):
         # ONLY ACT WHEN IN 'SET TIME' MODE
